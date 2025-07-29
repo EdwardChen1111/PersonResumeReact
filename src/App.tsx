@@ -314,7 +314,7 @@ const ProfilePage = () => {
       like: true,
       moredetail: false,
       certificate: false,
-      githublink: false,
+      githublink: 'https://github.com/EdwardChen1111/PersonResumeReact',
       keywords: ['個人簡歷', '網站', 'resume', 'web', 'react', 'Tailwind CSS']
     },
     {
