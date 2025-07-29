@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Settings, User, Trophy, Award, Code, Palette, Mail, MessageSquare, X, GraduationCap, Star, FolderOpen, Users, Clock } from 'lucide-react';
+import /*React, */{ useState, useEffect } from 'react';
+import { Search, Settings, /*User, Trophy, Award, */Code, /*Palette, */Mail, MessageSquare, X, /*GraduationCap, Star, FolderOpen, Users, Clock*/ } from 'lucide-react';
 import MyPicture from './assets/my-picture.jpg';
 import PCSH from './assets/pcsh.jpg';
 import NTUST from './assets/ntust.png';
@@ -13,9 +13,9 @@ const ProfilePage = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [currentPage, setCurrentPage] = useState('main');
-  const [showModal, setShowModal] = useState(null);
+  const [showModal, setShowModal] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
   // 新增狀態來控制顯示的卡片數量
@@ -33,11 +33,11 @@ const ProfilePage = () => {
   });
 
   // 主題相關的樣式類別
-  const getThemeClasses = () => {
+  /*const getThemeClasses = () => {
     const base = settings.darkMode ? 'dark' : '';
     const bg = settings.darkMode ? 'bg-gray-900' : 'bg-gray-50';
     return { base, bg };
-  };
+  };*/
 
   const getCardClasses = () => {
     const darkClass = settings.darkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-200 text-gray-900';
@@ -70,6 +70,9 @@ const ProfilePage = () => {
       red : 'text-red-600 border-red-600 bg-red-50',
       orange : 'text-orange-600 border-orange-600 bg-orange-50'
     }[settings.primaryColor];
+    if (color === undefined) {
+      return ''
+    }
     return color;
   };
 
@@ -99,7 +102,7 @@ const ProfilePage = () => {
     }
   };
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = (tab: any) => {
     if (tab === activeTab) return;
     
     // 記住當前垂直滾動位置
@@ -152,7 +155,7 @@ const ProfilePage = () => {
     }, 150);
   };
 
-  const selectCard = (item) => {
+  const selectCard = (item: any) => {
     setSelectedItem(selectedItem === item ? null : item)
     setFocusedItem(focusedItem === item ? item : null);
   };
@@ -396,7 +399,7 @@ const ProfilePage = () => {
 
   // 監聽 ESC 鍵以關閉 Modal
   useEffect(() => {
-    const handleEsc = (event) => {
+    const handleEsc = (event: any) => {
       if (event.key === 'Escape') {
         setShowModal(null);
       }
@@ -422,7 +425,7 @@ const ProfilePage = () => {
         return true;
       });
 
-  const handleSearchSelect = (item) => {
+  const handleSearchSelect = (item: any) => {
     setFocusedItem(item.id);
     setSearchQuery('');
     setShowSearchResults(false);
@@ -472,6 +475,7 @@ const ProfilePage = () => {
           <div className="flex items-center justify-between">
             <h2 className={`text-xl font-semibold ${getTextClasses()}`}>顯示設定</h2>
             <button 
+              title="Close"
               onClick={() => setShowModal(null)}
               className={`p-2 rounded-lg hover:${settings.darkMode ? 'bg-gray-700' : 'bg-gray-100'} transition-colors`}
             >
@@ -487,6 +491,7 @@ const ProfilePage = () => {
             <div className="flex items-center justify-between">
               <span className={`${settings.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>暗色模式</span>
               <button
+                title="DarkMode"
                 onClick={() => setSettings(prev => ({ ...prev, darkMode: !prev.darkMode }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                   settings.darkMode ? 'bg-blue-600' : 'bg-gray-300'
@@ -540,6 +545,7 @@ const ProfilePage = () => {
                 { value: 'orange', color: 'bg-orange-500' }
               ].map(color => (
                 <button
+                  title="PrimaryColor"
                   key={color.value}
                   onClick={() => setSettings(prev => ({ ...prev, primaryColor: color.value }))}
                   className={`w-8 h-8 rounded-full ${color.color} border-2 transition-all ${
@@ -611,6 +617,7 @@ const ProfilePage = () => {
               <div className="flex items-center justify-between">
                 <span className={`${settings.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>動畫效果</span>
                 <button
+                  title="Animations"
                   onClick={() => setSettings(prev => ({ ...prev, animations: !prev.animations }))}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                     settings.animations ? `bg-${settings.primaryColor}-600` : 'bg-gray-300'
@@ -626,6 +633,7 @@ const ProfilePage = () => {
               <div className="flex items-center justify-between">
                 <span className={`${settings.darkMode ? 'text-gray-300' : 'text-gray-600'}`}>緊湊模式</span>
                 <button
+                  title="CompactMode"
                   onClick={() => setSettings(prev => ({ ...prev, compactMode: !prev.compactMode }))}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                     settings.compactMode ? `bg-${settings.primaryColor}-600` : 'bg-gray-300'
@@ -997,7 +1005,7 @@ const ProfilePage = () => {
         </div>
       )}
       
-      <style jsx>{`
+      <style>{`
         .scrollbar-hide {
           -ms-overflow-style: none;  /* Internet Explorer 10+ */
           scrollbar-width: none;  /* Firefox */
@@ -1111,6 +1119,7 @@ const ProfilePage = () => {
                 Projects
               </button>
               <button 
+                title='OpenSetting'
                 onClick={() => setShowModal('settings')}
                 className={`bg-${settings.primaryColor}-600 text-white px-2 py-1 sm:px-3 sm:py-2 ${
                   settings.borderRadius === 'small' ? 'rounded' : 
@@ -1120,6 +1129,7 @@ const ProfilePage = () => {
                 <Settings className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
               <button
+                title='OpenMain'
                 onClick={() => setCurrentPage('main')}
                 className={`myPicture w-6 h-6 sm:w-8 sm:h-8 bg-${settings.primaryColor}-500 ${
                   settings.borderRadius === 'small' ? 'rounded' : 
